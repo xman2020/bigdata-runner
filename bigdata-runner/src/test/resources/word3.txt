@@ -1,0 +1,8 @@
+hello world
+hello hadoop
+hadoop is a bigdata platform
+bigdata is a popular technic
+
+hadoop is good
+
+hadoop is very good
