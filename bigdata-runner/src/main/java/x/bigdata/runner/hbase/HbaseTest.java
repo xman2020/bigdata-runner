@@ -122,9 +122,11 @@ public class HbaseTest {
         Configuration configuration = HBaseConfiguration.create();
         configuration.set("hbase.zookeeper.property.clientPort", "2181");
         configuration.set("hbase.zookeeper.quorum", "127.0.0.1");
+        //configuration.set("hbase.zookeeper.quorum", "172.22.6.15");
         //集群配置
         //configuration.set("hbase.zookeeper.quorum", "101.236.39.141,101.236.46.114,101.236.46.113");
         configuration.set("hbase.master", "127.0.0.1:60000");
+        //configuration.set("hbase.master", "172.22.6.15:60000");
         return ConnectionFactory.createConnection(configuration);
     }
 
