@@ -13,16 +13,18 @@ import java.util.Date;
 public class HbaseTest {
 
     public static void main(String[] args) throws Exception {
-        HbaseTest test = new HbaseTest();
+        //HbaseTest test = new HbaseTest();
 
         //test.insert();
 
         //test.insert100w();
 
-        test.select();
+        //test.select();
 
 
     }
+
+    // create 'monitor_constant_bus','c'
 
     private void insert() throws IOException {
         Connection connection = this.getConnection();
@@ -44,6 +46,8 @@ public class HbaseTest {
             connection.close();
         }
     }
+
+    // create 'monitor_constant_bus_z','c'
 
     private void insert100w() throws IOException {
         System.out.println("insert100w begin: " + new Date());
