@@ -1,6 +1,7 @@
 package x.thread.test;
 
 public class ThreadTest {
+    // 相关文档：Java多核多线程测试.docx
 
     public static void main(String[] args) throws Exception {
         int threads = Integer.parseInt(args[0]);

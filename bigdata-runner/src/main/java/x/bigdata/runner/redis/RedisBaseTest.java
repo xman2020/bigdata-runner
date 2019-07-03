@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 public class RedisBaseTest {
+    // 相关文档：Redis基准测试1.docx
 
     private ShardedJedisPool pool;
 
@@ -23,7 +24,8 @@ public class RedisBaseTest {
         //test.insert03();
 
         //test.select01();
-        test.select03();
+        //test.select03();
+        test.select05();
     }
 
     public RedisBaseTest() {
@@ -32,8 +34,8 @@ public class RedisBaseTest {
         config.setMaxIdle(10);
         //config.setTestOnBorrow(true);
 
-        //JedisShardInfo node1 = new JedisShardInfo("172.22.6.1", 6379);
-        JedisShardInfo node1 = new JedisShardInfo("127.0.0.1", 6379);
+        JedisShardInfo node1 = new JedisShardInfo("172.22.6.1", 6379);
+        //JedisShardInfo node1 = new JedisShardInfo("127.0.0.1", 6379);
         List shardList = new ArrayList();
         shardList.add(node1);
 
@@ -195,6 +197,50 @@ public class RedisBaseTest {
         public void run() {
             RedisBaseTest test = new RedisBaseTest();
             test.select02(begin, end);
+        }
+    }
+
+    public void select04() {
+        String threadName = Thread.currentThread().getName();
+        System.out.println(threadName +" select begin: " + new Date());
+
+        Random random = new Random();
+        ShardedJedis jedis = null;
+        int count = 0;
+        int batch = 0;
+
+        try {
+            jedis = this.pool.getResource();
+
+            while (true) {
+                int i = random.nextInt(5000000);
+                String key = String.format("%02d", i) + "|" + String.format("%09d", i) + "|metric";
+                jedis.get(key);
+
+                count++;
+
+                if (count / 1000000 == 1) {
+                    batch++;
+                    System.out.println(threadName +" select batch " + batch + ": " + new Date());
+                    count = 0;
+                }
+            }
+        } finally {
+            this.pool.returnResource(jedis);
+        }
+    }
+
+    public void select05() {
+        for (int i = 0; i < 10; i++) {
+            new SelectThread2().start();
+        }
+    }
+
+    static class SelectThread2 extends Thread {
+        @Override
+        public void run() {
+            RedisBaseTest test = new RedisBaseTest();
+            test.select04();
         }
     }
 

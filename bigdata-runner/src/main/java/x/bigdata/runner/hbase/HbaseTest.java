@@ -21,7 +21,6 @@ public class HbaseTest {
 
         //test.select();
 
-
     }
 
     // create 'monitor_constant_bus','c'

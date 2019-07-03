@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class HbaseBaseTest {
+    // 相关文档：HBase基准测试设计.xmind、HBase集锦3.docx
 
     public static void main(String[] args) throws Exception {
         HbaseBaseTest test = new HbaseBaseTest();
