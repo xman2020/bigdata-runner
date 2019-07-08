@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class HbaseBaseTest {
-    // 相关文档：HBase基准测试设计.xmind、HBase集锦3.docx
+    // 相关文档：Hbase基准测试-单机低配1.docx
 
     public static void main(String[] args) throws Exception {
         HbaseBaseTest test = new HbaseBaseTest();
@@ -29,7 +29,7 @@ public class HbaseBaseTest {
     private void insert01(String tableName, int begin, int end) throws IOException {
         System.out.println("insert begin: " + new Date());
 
-        Connection connection = this.getPoolConnection();
+        Connection connection = this.getConnection();
         Random random = new Random();
         Table table = connection.getTable(TableName.valueOf(tableName));
 
@@ -54,7 +54,7 @@ public class HbaseBaseTest {
     private void batchInsert01(String tableName, int begin, int end, int putNum) throws IOException {
         System.out.println("batchInsert begin: " + new Date());
 
-        Connection connection = this.getPoolConnection();
+        Connection connection = this.getConnection();
         Random random = new Random();
         ArrayList list = new ArrayList();
 
@@ -130,16 +130,6 @@ public class HbaseBaseTest {
     }
 
     private Connection getConnection() throws IOException {
-        Configuration configuration = HBaseConfiguration.create();
-        configuration.set("hbase.zookeeper.property.clientPort", "2181");
-        configuration.set("hbase.zookeeper.quorum", "127.0.0.1");
-        //集群配置
-        //configuration.set("hbase.zookeeper.quorum", "101.236.39.141,101.236.46.114,101.236.46.113");
-        configuration.set("hbase.master", "127.0.0.1:60000");
-        return ConnectionFactory.createConnection(configuration);
-    }
-
-    private Connection getPoolConnection() throws IOException {
         Configuration configuration = HBaseConfiguration.create();
         configuration.set("hbase.zookeeper.property.clientPort", "2181");
         configuration.set("hbase.zookeeper.quorum", "127.0.0.1");

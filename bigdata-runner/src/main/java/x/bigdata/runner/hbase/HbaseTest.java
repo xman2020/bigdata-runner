@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.Date;
 
 public class HbaseTest {
+    // 相关文档：Hbase基准测试-单机低配1.docx
 
     public static void main(String[] args) throws Exception {
         //HbaseTest test = new HbaseTest();
