@@ -1,3 +1,6 @@
 bigdata-runner.iml
 bigdata-runner/.idea
 bigdata-runner/target
+flink-runner/target
+flink-runner.iml
+flink-runner/.idea
