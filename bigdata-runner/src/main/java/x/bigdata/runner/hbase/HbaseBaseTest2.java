@@ -19,9 +19,9 @@ public class HbaseBaseTest2 {
 
     private static Connection CONN;
     private static String connections = "1";
-    private static String threads = "1";
+    private static String threads = "10";
 
-    private static int oneThreadSelect = 200000;
+    private static int oneThreadSelect = 200000000;
     private static int selectThreads = 100;
 
     // java -cp bigdata-runner-1.0-SNAPSHOT-jar-with-dependencies.jar x.bigdata.runner.hbase.HbaseBaseTest2
