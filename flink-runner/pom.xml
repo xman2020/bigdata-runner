@@ -66,6 +66,29 @@ under the License.
 			<scope>provided</scope>
 		</dependency>
 
+		<!--dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-table_${scala.binary.version}</artifactId>
+			<version>1.7.2</version>
+		</dependency-->
+
+		<!-- Use SQL -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-planner_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-table-api-scala-bridge_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-table-common</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
+
 		<!-- Scala Library, provided by Flink as well. -->
 		<dependency>
 			<groupId>org.scala-lang</groupId>

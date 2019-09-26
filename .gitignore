@@ -4,3 +4,5 @@ bigdata-runner/target
 flink-runner/target
 flink-runner.iml
 flink-runner/.idea
+dependency-reduced-pom.xml
+login_receive
