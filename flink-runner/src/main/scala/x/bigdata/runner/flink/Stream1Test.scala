@@ -40,7 +40,7 @@ object Stream1Test {
     val stream2 = tableEnv.toRetractStream[Row](result)
     stream2.print()
 
-    // SQL模式摸索好久才跑起来
+    // SQL模式摸索好久才跑起来，报各种隐式转换的错误（估计是泛型）
     // tableEnv.toAppendStream在SQL使用聚合时会报错，提示使用toRetractStream
 
     //lh,2019-01-22 11:04:11,success
