@@ -11,8 +11,6 @@ import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindo
 import org.apache.flink.streaming.api.windowing.time.Time
 import org.apache.flink.streaming.api.windowing.triggers.{Trigger, TriggerResult}
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow
-import org.apache.flink.table.shaded.org.joda.time.DateTime
-
 
 object TradeStreamTest {
   // nc -lk 9999
@@ -25,10 +23,50 @@ object TradeStreamTest {
 
     //this.test1(stream)
 
-    this.test2(stream)
+    //this.test2(stream)
+
+    this.test3(stream)
 
     env.execute("Trade Stream Test is running")
 
+  }
+
+  private def test3(stream: DataStream[String]): Unit = {
+    val df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+
+    val s1 = stream
+      .map(_.split(","))
+      .map(x => Trade(x(0), df.parse(x(1)).getTime, x(2).toDouble))
+      .assignTimestampsAndWatermarks(new MyWaterMark2)
+      .keyBy("name")
+      .window(TumblingEventTimeWindows.of(Time.seconds(10)))
+      .trigger(new MyTrigger1)
+
+    s1.sum("amount")
+      .print()
+
+    s1.max("amount")
+      .print()
+
+    //lh,2019-09-30 16:42:45,1.5
+    //lh,2019-09-30 16:42:45,1.6
+    //lh,2019-09-30 16:42:45,1.7
+    //lh,2019-09-30 16:42:45,1.5
+    //lh,2019-09-30 16:43:22,1.9
+    //lh,2019-09-30 16:43:22,1.8
+    //
+    //Trade(lh,1569832965000,1.5)
+    //Trade(lh,1569832965000,1.5)
+    //Trade(lh,1569832965000,3.1)
+    //Trade(lh,1569832965000,1.6)
+    //Trade(lh,1569832965000,1.7)
+    //Trade(lh,1569832965000,4.8)
+    //Trade(lh,1569832965000,1.7)
+    //Trade(lh,1569832965000,6.3)
+    //Trade(lh,1569833002000,1.9)
+    //Trade(lh,1569833002000,1.9)
+    //Trade(lh,1569833002000,1.9)
+    //Trade(lh,1569833002000,3.7)
   }
 
   private def test2(stream: DataStream[String]): Unit = {
@@ -99,7 +137,7 @@ object TradeStreamTest {
     //Trade(lh,1569833062000,1.7)
     //下一条输入后，上一条才输出
 
-    //规律还没摸清楚，参考EventTimeTrigger
+    //规律还没摸清楚，参考EventTimeTrigger、WindowOperator
   }
 
   case class Trade(name: String, times: Long, amount: Double)
