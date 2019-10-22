@@ -17,7 +17,7 @@ object Stream1Test {
 
     //this.print(stream)
 
-    //this.writeFile(stream)
+    this.writeFile(stream)
 
     //this.wordcount(stream)
 
@@ -25,7 +25,7 @@ object Stream1Test {
 
     //this.loginWindowcount(stream)
 
-    this.loginCountSql(stream)
+    //this.loginCountSql(stream)
 
     env.execute("Stream1Test is running")
   }
