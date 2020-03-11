@@ -33,8 +33,8 @@ public class HbaseBaseTest2 {
         //test.insert03();
         //test.insert05();
 
-        //test.select01(10);
-        test.select02();
+        test.select01(10);
+        //test.select02();
         //test.select04();
     }
 
@@ -188,12 +188,12 @@ public class HbaseBaseTest2 {
 
             Result result = table.get(get);
 
-//            for (Cell cell : result.rawCells()) {
-//                String colName = Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(), cell.getQualifierLength());
-//                String value = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
-//
-//                System.out.println(colName + "=" + value);
-//            }
+           for (Cell cell : result.rawCells()) {
+               String colName = Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(), cell.getQualifierLength());
+               String value = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
+
+               System.out.println(colName + "=" + value);
+           }
         }
 
         System.out.println("select end: " + new Date());
@@ -274,14 +274,24 @@ public class HbaseBaseTest2 {
     private static Connection getConnection() throws IOException {
         Configuration configuration = HBaseConfiguration.create();
         configuration.set("hbase.zookeeper.property.clientPort", "2181");
-        configuration.set("hbase.zookeeper.quorum", "172.22.6.9,172.22.6.10,172.22.6.11");
-        configuration.set("zookeeper.znode.parent", "/hyperbase1");
+        //configuration.set("hbase.zookeeper.quorum", "172.22.6.9,172.22.6.10,172.22.6.11");
+        configuration.set("hbase.zookeeper.quorum", "172.22.0.52");
+        //configuration.set("zookeeper.znode.parent", "/hyperbase1");
         configuration.set("hbase.hconnection.threads.core", threads);
         configuration.set("hbase.hconnection.threads.max", threads);
         configuration.set("hbase.client.ipc.pool.size", connections);
 
         // 问题：put时，程序卡住
         // 需要配置configuration.set("zookeeper.znode.parent", "/hyperbase1");
+
+        // FIDE配置
+        // hbase.enable = true
+        // zookeeper.quorum = tdh60dev01,tdh60dev02,tdh60dev03
+        // zookeeper.property.clientPort = 2181
+        // zookeeper.znode.parent = /hyperbase1
+        // hbase.hconnection.threads.max = 256
+        // hbase.hconnection.threads.core = 10
+        // hbase.column.family = F
 
         return ConnectionFactory.createConnection(configuration);
     }
